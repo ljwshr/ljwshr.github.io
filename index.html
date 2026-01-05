@@ -3,10 +3,154 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>我的 GitHub Pages</title>
+  <title>密码计算器</title>
+  <style>
+    :root {
+      color-scheme: light;
+      font-family: "Helvetica Neue", Arial, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      padding: 32px 20px 48px;
+      background: #f6f7fb;
+      color: #1f2933;
+    }
+
+    main {
+      max-width: 860px;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 28px;
+      border-radius: 16px;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+    }
+
+    h1 {
+      margin-top: 0;
+      font-size: 28px;
+    }
+
+    p {
+      color: #52606d;
+    }
+
+    form {
+      display: grid;
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .field {
+      display: grid;
+      gap: 8px;
+    }
+
+    label {
+      font-weight: 600;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid #d9e2ec;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+
+    textarea {
+      min-height: 80px;
+      resize: vertical;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    }
+
+    button {
+      border: none;
+      padding: 12px 16px;
+      border-radius: 999px;
+      background: #1d4ed8;
+      color: #ffffff;
+      font-weight: 600;
+      cursor: pointer;
+      justify-self: start;
+    }
+
+    button:hover {
+      background: #1e40af;
+    }
+
+    .results {
+      margin-top: 24px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .hint {
+      font-size: 12px;
+      color: #7b8794;
+    }
+  </style>
 </head>
 <body>
-  <h1>你好，这里是我的 github.io！</h1>
-  <p>如果你看到这行字，说明部署成功 🎉</p>
+  <main>
+    <h1>密码计算器</h1>
+    <p>输入设备参数并计算密码、校验码与在线密码。</p>
+
+    <form id="calculator-form">
+      <div class="field">
+        <label for="device-id">设备 ID</label>
+        <input id="device-id" type="text" value="69D9DAD526" required />
+      </div>
+      <div class="field">
+        <label for="local-key">Local Key</label>
+        <input id="local-key" type="text" value="a8f858a50d372bf684171d5f91ba91f2" required />
+      </div>
+      <div class="field">
+        <label for="timestamp">时间戳 (秒)</label>
+        <input id="timestamp" type="number" value="1657883400" required />
+        <span class="hint">可填写当前 Unix 时间戳，或使用“使用当前时间”按钮。</span>
+      </div>
+      <div class="field">
+        <label for="time-invalid">密码有效期 (分钟)</label>
+        <select id="time-invalid">
+          <option value="10" selected>10 分钟</option>
+          <option value="30">30 分钟</option>
+          <option value="custom">自定义秒数</option>
+        </select>
+      </div>
+      <div class="field" id="custom-invalid-field" hidden>
+        <label for="custom-invalid">自定义有效期 (秒)</label>
+        <input id="custom-invalid" type="number" min="1" value="10" />
+      </div>
+      <div class="field">
+        <label for="challenge-code">Challenge Code</label>
+        <input id="challenge-code" type="text" value="10d79da5b94f2ba3860f90323881c65f" />
+      </div>
+      <div class="field">
+        <button type="button" id="use-now">使用当前时间</button>
+      </div>
+      <div class="field">
+        <button type="submit">计算密码</button>
+      </div>
+    </form>
+
+    <section class="results">
+      <div class="field">
+        <label for="password-array">密码数组 (8 组)</label>
+        <textarea id="password-array" readonly></textarea>
+      </div>
+      <div class="field">
+        <label for="verify-code">校验码 (末 16 位)</label>
+        <input id="verify-code" type="text" readonly />
+      </div>
+      <div class="field">
+        <label for="online-password">在线密码 (6 位)</label>
+        <input id="online-password" type="text" readonly />
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
 </body>
 </html>
